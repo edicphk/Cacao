@@ -1,6 +1,6 @@
 # Description: Boxstarter Script  
-# Author: Laurent Kempé
-# Dev settings for my app development
+# Author: edicphk (original author: Laurent Kempé)
+# Common settings for web app development
 
 Disable-UAC
 
