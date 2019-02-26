@@ -20,35 +20,43 @@ function removeApp {
 	Param ([string]$appName)
 	Write-Output "Trying to remove $appName"
 	Get-AppxPackage $appName -AllUsers | Remove-AppxPackage
-	Get-AppXProvisionedPackage -Online | Where DisplayNam -like $appName | Remove-AppxProvisionedPackage -Online
+	Get-AppXProvisionedPackage -Online | Where DisplayName -like $appName | Remove-AppxProvisionedPackage -Online
 }
 
 $Applications = @(
-	"Microsoft.BingFinance"
-	"Microsoft.3DBuilder"
-	"Microsoft.BingNews"
-	"Microsoft.BingSports"
-	"Microsoft.BingWeather"
-	"Microsoft.CommsPhone"
-	"Microsoft.Getstarted"
-	"Microsoft.WindowsMaps"
-	"*MarchofEmpires*"
-	"Microsoft.GetHelp"
-	"Microsoft.Messaging"
-	"*Minecraft*"
-	"Microsoft.MicrosoftOfficeHub"
-	"Microsoft.OneConnect"
-	"Microsoft.WindowsPhone"
-	"Microsoft.WindowsSoundRecorder"
-	"*Solitaire*"
-	"Microsoft.MicrosoftStickyNotes"
-	"Microsoft.Office.Sway"
-	"Microsoft.NetworkSpeedTest"
-	"Microsoft.FreshPaint"
-	"Microsoft.Print3D"
-	"*Autodesk*"
-	"*BubbleWitch*"
-    "king.com*"
+	"Microsoft.BingFinance",
+	"Microsoft.3DBuilder",
+	"Microsoft.BingNews",
+	"Microsoft.BingSports",
+	"Microsoft.BingWeather",
+	"Microsoft.CommsPhone",
+	"Microsoft.Getstarted",
+	"Microsoft.WindowsMaps",
+	"*MarchofEmpires*",
+	"Microsoft.GetHelp",
+	"Microsoft.Messaging",
+	"*Minecraft*",
+	"Microsoft.MicrosoftOfficeHub",
+	"Microsoft.OneConnect",
+	"Microsoft.WindowsPhone",
+	"Microsoft.WindowsSoundRecorder",
+	"*Solitaire*",
+#	"Microsoft.MicrosoftStickyNotes",
+	"Microsoft.Office.Sway",
+	"Microsoft.NetworkSpeedTest",
+	"Microsoft.FreshPaint",
+	"Microsoft.Print3D",
+	"Microsoft.Wallet",                            # Wallet
+	"Microsoft.OneConnect",                        # Xbox
+	"Microsoft.StorePurchaseApp",                  # Xbox
+	"Microsoft.XboxIdentityProvider",              # Xbox
+	"Microsoft.XboxGameOverlay",                   # Xbox
+	"Microsoft.XboxSpeechToTextOverlay",           # Xbox
+	"Microsoft.Xbox.TCUI",                         # Xbox
+	"Microsoft.Office.Sway",                       # Sway
+	"*Autodesk*",
+	"*BubbleWitch*",
+	"king.com*",
 	"*Plex*"
 );
 
@@ -63,24 +71,12 @@ choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 #--- Docker ---
 Enable-WindowsOptionalFeature -Online -FeatureName containers -All
 RefreshEnv
-choco install -y docker-for-windows
-
-#--- Visual Studio ---
-choco install visualstudio2017professional -y --package-parameters "--add Microsoft.VisualStudio.Component.Git" 
-Update-SessionEnvironment #refreshing env due to Git install
-
-choco install -y visualstudio2017-workload-manageddesktop
-choco install -y visualstudio2017-workload-netcoretools
-choco install -y visualstudio2017-workload-azure 
-choco install -y visualstudio2017-workload-visualstudioextension 
-
-choco install -y netfx-4.7.1-devpack 
+choco install -y docker-for-windows 
 
 #--- Define Packages to Install ---
 $Packages = 'git',`
             'poshgit',`
             'kdiff3',`
-            'resharper-ultimate-all /NoCpp',`
             'vscode',`
             'vscode-docker',`
             'notepadplusplus',`
@@ -95,6 +91,7 @@ $Packages = 'git',`
             'ngrok.portable',`
             'winscp',`
             'GoogleChrome',`
+	    'firefox',`
             'paint.net',`
             'rapidee',`
             'sharex',`
@@ -102,7 +99,7 @@ $Packages = 'git',`
             'sysinternals',`
             'windirstat',`
             'rufus',`
-            'openvpn'
+            'netfx-4.7-devpack'
 
 #--- Install Packages ---
 ForEach ($PackageName in $Packages)
