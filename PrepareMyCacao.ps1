@@ -49,10 +49,7 @@ $Applications = @(
 	"Microsoft.Wallet",                            # Wallet
 	"Microsoft.OneConnect",                        # Xbox
 	"Microsoft.StorePurchaseApp",                  # Xbox
-	"Microsoft.XboxIdentityProvider",              # Xbox
-	"Microsoft.XboxGameOverlay",                   # Xbox
-	"Microsoft.XboxSpeechToTextOverlay",           # Xbox
-	"Microsoft.Xbox.TCUI",                         # Xbox
+	"*Xbox*",                                      # Xbox
 	"Microsoft.Office.Sway",                       # Sway
 	"*Autodesk*",
 	"*BubbleWitch*",
@@ -99,11 +96,14 @@ $Packages = 'git',`
             'sysinternals',`
             'windirstat',`
             'rufus',`
-            'netfx-4.7-devpack'
+            'netfx-4.7-devpack,`
+	    'bitnami-xampp'
 
 #--- Install Packages ---
 ForEach ($PackageName in $Packages)
 {choco install $PackageName -y}
+
+choco install composer -y -install-arguments '/PHP=""C:\xampp\php""'
 
 Enable-UAC
 Enable-MicrosoftUpdate
